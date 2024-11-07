@@ -1,0 +1,103 @@
+<div class="step-text">
+<p></p>
+<h5 id="description">Description</h5>
+<p>Now that we have a good basis, let's add some big improvements to our program. First, sharing and showing the same piece of code over and over is not going to get you far. Let's improve our platform by implementing the feature that will allow us to upload a piece of code.</p>
+<p>In this stage, your program must store one piece of code and display it both through the API and the web requests just like in the previous stage. This time, it should be possible to change this piece of code with a <code class="language-javascript">POST /api/code/new</code> request.</p>
+<p>Let's add another useful feature: showing the date when this particular piece of code was last updated. In other words, the API and web requests should include the date.</p>
+<p>Before getting to work, take a look at the Java <a href="https://www.javadevjournal.com/java/java-8-format-localdatetime/" rel="noopener noreferrer nofollow" target="_blank">tutorial about formatting dates</a>. In your code, you can use any pattern.</p>
+<h5 id="objectives">Objectives</h5>
+<p>In this stage, you need to implement the following endpoints.</p>
+<ul>
+<li>
+<p><code class="language-javascript">GET /api/code</code> should return JSON with the following fields:</p>
+</li>
+</ul>
+<ol>
+<li>
+<p><code class="language-javascript">code</code> that contains the same piece of code;</p>
+</li>
+<li>
+<p><code class="language-javascript">date</code> that contains the date when this piece of code was loaded. </p>
+</li>
+</ol>
+<ul>
+<li>
+<p><code class="language-javascript">GET /code</code> should return HTML that contains:</p>
+</li>
+</ul>
+<ol>
+<li>
+<p>Tags <code class="language-javascript">&lt;pre id="code_snippet"&gt; ... &lt;/pre&gt;</code> with the piece of code inside;</p>
+</li>
+<li>
+<p>Title <code class="language-javascript">Code</code>;</p>
+</li>
+<li>
+<p>Date when this piece of code was loaded inside the tags <code class="language-javascript">&lt;span id="load_date"&gt; ... &lt;/span&gt;</code>. </p>
+</li>
+</ol>
+<p>The code snippet and the date in the API and the web requests should be the same.</p>
+<ul>
+<li>
+<p><code class="language-javascript">POST /api/code/new</code> should take a JSON object with a single field <code class="language-javascript">code</code>, use it as the current code snippet, and return an empty JSON. In the upcoming stages, it won't be empty.<br/>
+</p>
+</li>
+<li>
+<p><code class="language-javascript">GET /code/new</code> should return HTML that contains:</p>
+</li>
+</ul>
+<ol>
+<li>
+<p>Tags <code class="language-javascript">&lt;textarea id="code_snippet"&gt; ... &lt;/textarea&gt;</code> where you can paste a code snippet;</p>
+</li>
+<li>
+<p>Title <code class="language-javascript">Create</code>;</p>
+</li>
+<li>
+<p>Button <code class="language-javascript">&lt;button id="send_snippet" type="submit" onclick="send()"&gt;Submit&lt;/button&gt;</code>.</p>
+</li>
+</ol>
+<p>Note: <code class="language-javascript">form</code> doesn't send your data in the JSON format, so you need to specify a special function that does it. You can use the <a href="https://javascript.info/xmlhttprequest" rel="noopener noreferrer nofollow" target="_blank">XMLHttpRequest</a> to do that. Here's the function:</p>
+<pre><code class="language-javascript">function send() {
+    let object = {
+        "code": document.getElementById("code_snippet").value
+    };
+    
+    let json = JSON.stringify(object);
+    
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", '/api/code/new', false)
+    xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+    xhr.send(json);
+    
+    if (xhr.status == 200) {
+      alert("Success!");
+    }
+}</code></pre>
+<p>Don't forget about id's in the tags: they are used to test your code.</p>
+<p>Use CSS to customize your HTML as you like it. Customization won't be checked in tests.</p>
+<h5 id="examples">Examples</h5>
+<p><strong>Example 1</strong></p>
+<p>Request: <code class="language-javascript">GET /code</code><br/>
+Response:</p>
+<p><picture><source media="(max-width: 480px)" srcset="https://ucarecdn.com/4bd5a473-6cfc-4dc5-95cc-349f0ad02950/-/stretch/off/-/resize/480x/-/format/webp/ 1x,https://ucarecdn.com/4bd5a473-6cfc-4dc5-95cc-349f0ad02950/-/stretch/off/-/resize/960x/-/format/webp/ 2x,https://ucarecdn.com/4bd5a473-6cfc-4dc5-95cc-349f0ad02950/-/stretch/off/-/resize/1440x/-/format/webp/ 3x" type="image/webp"/><source media="(max-width: 800px)" srcset="https://ucarecdn.com/4bd5a473-6cfc-4dc5-95cc-349f0ad02950/-/stretch/off/-/resize/800x/-/format/webp/ 1x,https://ucarecdn.com/4bd5a473-6cfc-4dc5-95cc-349f0ad02950/-/stretch/off/-/resize/1600x/-/format/webp/ 2x,https://ucarecdn.com/4bd5a473-6cfc-4dc5-95cc-349f0ad02950/-/stretch/off/-/resize/2400x/-/format/webp/ 3x" type="image/webp"/><source srcset="https://ucarecdn.com/4bd5a473-6cfc-4dc5-95cc-349f0ad02950/-/stretch/off/-/resize/1100x/-/format/webp/ 1x,https://ucarecdn.com/4bd5a473-6cfc-4dc5-95cc-349f0ad02950/-/stretch/off/-/resize/2200x/-/format/webp/ 2x,https://ucarecdn.com/4bd5a473-6cfc-4dc5-95cc-349f0ad02950/-/stretch/off/-/resize/3000x/-/format/webp/ 3x" type="image/webp"/><img alt="shared code snippet" height="180" src="https://ucarecdn.com/4bd5a473-6cfc-4dc5-95cc-349f0ad02950/" width="598"/></picture></p>
+<p><strong>Example 2</strong></p>
+<p>Request: <code class="language-javascript">GET /api/code</code><br/>
+Response:</p>
+<pre><code class="language-json">{
+    "code": "public static void ...",
+    "date": "2020/01/01 12:00:03"
+}</code></pre>
+<p><strong>Example 3</strong></p>
+<p>Request: <code class="language-javascript">POST /api/code/new</code> with the following body:</p>
+<pre><code class="language-json">{
+    "code": "class Code { ..."
+}</code></pre>
+<p>Response: <code class="language-javascript">{}</code>.</p>
+<p>After that, <code class="language-javascript">GET /code</code> should contain an updated snippet with an updated date:</p>
+<p><picture><source media="(max-width: 480px)" srcset="https://ucarecdn.com/0e471b2b-6aca-4226-9a9e-ae0b57e58ede/-/stretch/off/-/resize/480x/-/format/webp/ 1x,https://ucarecdn.com/0e471b2b-6aca-4226-9a9e-ae0b57e58ede/-/stretch/off/-/resize/960x/-/format/webp/ 2x,https://ucarecdn.com/0e471b2b-6aca-4226-9a9e-ae0b57e58ede/-/stretch/off/-/resize/1440x/-/format/webp/ 3x" type="image/webp"/><source media="(max-width: 800px)" srcset="https://ucarecdn.com/0e471b2b-6aca-4226-9a9e-ae0b57e58ede/-/stretch/off/-/resize/800x/-/format/webp/ 1x,https://ucarecdn.com/0e471b2b-6aca-4226-9a9e-ae0b57e58ede/-/stretch/off/-/resize/1600x/-/format/webp/ 2x,https://ucarecdn.com/0e471b2b-6aca-4226-9a9e-ae0b57e58ede/-/stretch/off/-/resize/2400x/-/format/webp/ 3x" type="image/webp"/><source srcset="https://ucarecdn.com/0e471b2b-6aca-4226-9a9e-ae0b57e58ede/-/stretch/off/-/resize/1100x/-/format/webp/ 1x,https://ucarecdn.com/0e471b2b-6aca-4226-9a9e-ae0b57e58ede/-/stretch/off/-/resize/2200x/-/format/webp/ 2x,https://ucarecdn.com/0e471b2b-6aca-4226-9a9e-ae0b57e58ede/-/stretch/off/-/resize/3000x/-/format/webp/ 3x" type="image/webp"/><img alt="submitted code snippet" height="258" src="https://ucarecdn.com/0e471b2b-6aca-4226-9a9e-ae0b57e58ede/" width="598"/></picture></p>
+<p><strong>Example 4</strong></p>
+<p>Request: <code class="language-javascript">GET /code/new</code><br/>
+Response:</p>
+<p><picture><source media="(max-width: 480px)" srcset="https://ucarecdn.com/406b6e37-9585-4746-856b-8b2af0a34140/-/stretch/off/-/resize/480x/-/format/webp/ 1x,https://ucarecdn.com/406b6e37-9585-4746-856b-8b2af0a34140/-/stretch/off/-/resize/960x/-/format/webp/ 2x,https://ucarecdn.com/406b6e37-9585-4746-856b-8b2af0a34140/-/stretch/off/-/resize/1440x/-/format/webp/ 3x" type="image/webp"/><source media="(max-width: 800px)" srcset="https://ucarecdn.com/406b6e37-9585-4746-856b-8b2af0a34140/-/stretch/off/-/resize/800x/-/format/webp/ 1x,https://ucarecdn.com/406b6e37-9585-4746-856b-8b2af0a34140/-/stretch/off/-/resize/1600x/-/format/webp/ 2x,https://ucarecdn.com/406b6e37-9585-4746-856b-8b2af0a34140/-/stretch/off/-/resize/2400x/-/format/webp/ 3x" type="image/webp"/><source srcset="https://ucarecdn.com/406b6e37-9585-4746-856b-8b2af0a34140/-/stretch/off/-/resize/1100x/-/format/webp/ 1x,https://ucarecdn.com/406b6e37-9585-4746-856b-8b2af0a34140/-/stretch/off/-/resize/2200x/-/format/webp/ 2x,https://ucarecdn.com/406b6e37-9585-4746-856b-8b2af0a34140/-/stretch/off/-/resize/3000x/-/format/webp/ 3x" type="image/webp"/><img alt="code snippet input field" height="216" src="https://ucarecdn.com/406b6e37-9585-4746-856b-8b2af0a34140/" width="600"/></picture></p>
+</div>

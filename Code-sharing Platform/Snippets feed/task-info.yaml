@@ -1,0 +1,29 @@
+type: edu
+files:
+  - name: src/platform/CodeSharingPlatform.java
+    visible: true
+    learner_created: false
+  - name: src/resources/application.properties
+    visible: true
+    learner_created: false
+  - name: build.gradle
+    visible: true
+    learner_created: false
+  - name: test/CodeSharingPlatformTest.java
+    visible: false
+    learner_created: false
+  - name: src/platform/model/CodeSnippet.java
+    visible: true
+    learner_created: true
+  - name: src/platform/controller/CodeController.java
+    visible: true
+    learner_created: true
+  - name: src/platform/service/CodeService.java
+    visible: true
+    learner_created: true
+feedback_link: https://hyperskill.org/learn/step/11029#comment
+status: Solved
+feedback:
+  message: Congratulations!
+  time: "Tue, 05 Nov 2024 12:50:26 UTC"
+record: 3
